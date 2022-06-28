@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
+
 package serverversion;
 
 
@@ -14,6 +11,10 @@ import java.util.logging.Logger;
 
 import javax.swing.table.DefaultTableModel;
 import serverversion.Functions;
+import static serverversion.Functions.DatabaseManipulation.retrieve;
+import static serverversion.Functions.Logic.purchase;
+import static serverversion.Functions.Logic.retriveClothes;
+import static serverversion.Functions.Logic.retriveConsumables;
 
 /**
  *
@@ -21,76 +22,59 @@ import serverversion.Functions;
  */
 public class ServerVersion {
 
-    
-    public static ResultSet retrieve(String Query) throws SQLException
-    {
-        int CC;   
-        String name;
-        Statement stmt=null;
-        ResultSet rs = null;
-        ServerSocket server = null;
-        Socket client = null;
-        Connection con = null;
-        ObjectOutputStream out =null;
-        String str = null;
-        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/marketplace_database?zeroDateTimeBehavior=CONVERT_TO_NULL", "root","lolbiglol");
-        stmt = con.createStatement();
-        rs = stmt.executeQuery(Query);
-        ResultSetMetaData RSMD = rs.getMetaData();
-        CC = RSMD.getColumnCount();
-        name=RSMD.getColumnName(1);
-        
-        return rs;
-    
-    }
-    public static boolean update(String Query) throws SQLException
-    {
-        Statement stmt=null;
-        ResultSet rs = null;
-        ServerSocket server = null;
-        Socket client = null;
-        Connection con = null;
-        ObjectOutputStream out =null;
-        String str = null;
-        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/marketplace_database?zeroDateTimeBehavior=CONVERT_TO_NULL", "root","lolbiglol");
-                
-        PreparedStatement add = con.prepareStatement(Query);
-        add.executeUpdate();
-        return true;
-    }
 
-
-    
-
-              
-                
-    
-
-
-    
-
-    
-    
-    
     public static void main(String[] args) throws SQLException {
-        boolean key=Functions.validations.isExist("alyafif@gmail.com");
-        if(key)
-        {
-            System.out.println("exists");
-        }
-        else
-        {
-            System.out.println("not exist");
-        }
-        System.out.println(Functions.Logic.getMaxId());
-        if(Functions.Logic.SignUp("tester2", "tester2@gmail.com", "07775000", "1234"))
-        {
-            System.out.println("correct");
-        }
-        else
-        {
-            System.out.println("shit");
-        }
+//        Vector<clothes> records=retriveClothes();
+//        
+//        for(int i=0;i<records.size();i++)
+//        {
+//            System.out.print( i+ " ID: "+records.get(i).getID()+"\n");
+//            System.out.print( i+ " price: "+records.get(i).getPrice()+"\n");
+//            System.out.print( i+ " type: "+records.get(i).getTYPE()+"\n");
+//            System.out.print( i+ " COLOR: "+records.get(i).getCOLOR()+"\n");
+//            
+//        }
+
+//         Vector<consumables> records=retriveConsumables();
+//         
+//                 for(int i=0;i<records.size();i++)
+//        {
+//            System.out.print( i+ " ID: "+records.get(i).getID()+"\n");
+//            System.out.print( i+ " price: "+records.get(i).getPrice()+"\n");
+//            System.out.print( i+ " date: "+records.get(i).getProduction_date()+"\n");
+//            System.out.print( i+ " brand: "+records.get(i).getBrand()+"\n");
+//            
+//        }
+
+
+        Vector<item> records = new Vector<item>();
+        
+          
+            
+            String Query="Select * from item" ;
+            ResultSet rs=retrieve(Query);
+            records.removeAllElements();
+             ResultSetMetaData RSMD = rs.getMetaData();
+             int starter=-3;
+                    while(rs.next()&&starter!=0)
+                    {       
+                        item items=new item();
+                        items.setID( Integer.valueOf(rs.getString(1)));
+                        items.setPrice( Integer.valueOf(rs.getString(2)));
+                        items.setAmount( Integer.valueOf(rs.getString(3))+starter);
+                        items.setBrand(rs.getString(4));
+                        
+
+                        
+                        records.add(items);
+                        starter++;
+                        
+                    }    
+                    System.err.println(purchase(records));
+
+                    
+            
+        
 
 }
 
@@ -98,3 +82,4 @@ public class ServerVersion {
     
     
 }
+
