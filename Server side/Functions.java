@@ -37,7 +37,7 @@ public class Functions {
                 
                 
     }
-        public static boolean ValidCard(String name_on_Card,String card_number,String CVV,int amount,String date)
+        public static boolean ValidCard(String name_on_Card,String card_number,String CVV,String amount,String date)
         {
             //Code here ya amr ya amin
         }
