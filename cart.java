@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 
 public class cart {
-  ArrayList<Item> itemlist = new ArrayList<Item>(); 
+    ArrayList<item> itemlist = new ArrayList<item>(); 
  
 
     public cart() {
@@ -16,15 +16,15 @@ public class cart {
        itemlist.clear();
      } 
      
-        public void add(Item anitem)
+        public void add(item anitem)
     {
   
      for(int i = 0; i < itemlist.size(); i++)
      {
-     Item item = itemlist.get(i);
-      if(anitem.id == item.id)                       // already in the cart?
+     item item = itemlist.get(i);
+      if(anitem.ID == item.ID)                       // already in the cart?
       {
-       item.quantity += anitem.quantity;              // yes, just update the quantity
+       item.Amount += anitem.Amount;              // yes, just update the quantity
        return;
       }
      }
@@ -32,13 +32,13 @@ public class cart {
     }
         
         
-       public void remove(int id)
+       public void remove(int ID)
     {
   
      for(int i = 0; i < itemlist.size(); i++)
      {
-      Item item = itemlist.get(i);
-      if(id == item.id)                             // item in the cart?
+      item item = itemlist.get(i);
+      if(ID == item.ID)                             // item in the cart?
       {
        itemlist.remove(i);                          // remove it
        break;
@@ -46,7 +46,17 @@ public class cart {
      }
     
     
-    }   
+    }  
+       
+       	public  void printList()
+	{
+		System.out.println("your cart contains: ");
+		for(Object i : itemlist )
+		{
+			System.out.println(((item) i).getAmount() + " " + ((item) i).getBrand() + "(s), Costing" +" "+ ((item) i).getPrice() +" " + "for each" );
+		}
+
+	} 
   
     
     } 
