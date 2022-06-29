@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package serverversion;
 
 import java.io.*;
@@ -21,7 +25,7 @@ public class Functions {
     {
         boolean valid=true;
         
-        String Query="Select * from person , user where UserID=ID and Email='"+email+"' and password= '"+password+"'";
+        String Query="Select * from person where  Email='"+email+"' and password= '"+password+"'";
         ResultSet rs=DatabaseManipulation.retrieve(Query);
         if(rs.next())
         {
@@ -33,10 +37,16 @@ public class Functions {
                 
                 
     }
+        public static boolean ValidCard(String name_on_Card,String card_number,String CVV,int amount,String date)
+        {
+            //Code here ya amr ya amin
+        }
+        
+        
         public static boolean isExist(String email) throws SQLException
     {
         boolean valid=true;
-        String Query="Select * from  user where Email='"+email+"'" ;
+        String Query="Select * from  person where Email='"+email+"'" ;
         ResultSet rs=DatabaseManipulation.retrieve(Query);
         if(rs.next())
         {
@@ -90,7 +100,7 @@ public class Functions {
     
     }
     static class Logic{
-        public static boolean SignUp(String name , String email , String phone , String password) throws SQLException
+        public static synchronized boolean SignUp(String name , String email , String phone , String password) throws SQLException
         {
             
             if(validations.isExist(email))
@@ -99,11 +109,8 @@ public class Functions {
             }
             else
             {
-                String command="insert into person values";
-                String ID= String.valueOf(getMaxId()+1);
-                String Query=command+"('"+ID+"','"+name+"','"+password+"')";
-                DatabaseManipulation.update(Query);
-                Query="insert into user values('"+ID+"','"+phone+"','"+email+"')";
+                int id=getMaxId()+1;
+                String Query="insert into person values('"+id+"', '"+name+"','"+password+"','"+email+"','"+phone+"')";
                 DatabaseManipulation.update(Query);
                 return true;
             }
@@ -169,7 +176,7 @@ public class Functions {
         
     }
         
-        public static boolean purchase(Vector<item> items) throws SQLException
+        public static synchronized boolean purchase(Vector<item> items) throws SQLException
         {
 
             validations.CheckAndSetAmount(items);
@@ -188,6 +195,44 @@ public class Functions {
                 return false;
             }
 
+        }
+        public static synchronized void UpdatePassword(String email,String password) throws SQLException
+        {
+            String Query="Select UserID from user where Email='"+email+"'";
+            ResultSet rs=DatabaseManipulation.retrieve(Query);
+            rs.next();
+            int id=rs.getInt(1);
+            Query="update person set Password='"+password+"' where ID='"+id+"'";
+            DatabaseManipulation.update(Query);
+            
+        }
+        
+        public static Vector GetInfo(String email) throws SQLException
+        {   
+            
+            Vector info=new Vector();
+            
+            String Query="Select * from person where Email='"+email+"'";
+            
+            ResultSet rs=DatabaseManipulation.retrieve(Query);
+            
+             ResultSetMetaData RSMD = rs.getMetaData();
+             
+             rs.next();
+             int i=1;
+             
+                    while(i<7)
+                    {       
+                        
+                        info.add(rs.getString(i));
+                        
+                        System.out.println(rs.getString(i));
+                        
+                        i++;
+                        
+                    }        
+                    
+           return info;
         }
     }
     static class DatabaseManipulation
