@@ -37,10 +37,22 @@ public class Functions {
                 
                 
     }
-        public static boolean ValidCard(String name_on_Card,String card_number,String CVV,String amount,String date)
-        {
-            //Code here ya amr ya amin
-        }
+    public static boolean ValidCard(String name_on_Card,String card_number,String CVV,String amount,String date) throws SQLException
+    {
+            
+          boolean valid =  true;
+          String Query="Select * from credit_card where  card_number='"+card_number+"' and Name_On_Card= '"+name_on_Card+"'";
+          ResultSet rs=DatabaseManipulation.retrieve(Query);
+          if(rs.next())
+          {
+            valid=true;
+          }
+          else
+          {
+            valid=false;
+          }
+          return valid;
+    }
         
         
         public static boolean isExist(String email) throws SQLException
