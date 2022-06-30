@@ -18,3 +18,7 @@
 ## Screens
 
 ![alt text](https://github.com/AmrAmin761/Market-place/blob/main/Screens/Screen1.png)
+##
+![alt text](https://github.com/AmrAmin761/Market-place/blob/main/Screens/Screen2.png)
+##
+![alt text](https://github.com/AmrAmin761/Market-place/blob/main/Screens/Screen3.png)
