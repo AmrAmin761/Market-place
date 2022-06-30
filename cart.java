@@ -1,4 +1,4 @@
-package parallel;
+
 import java.util.ArrayList;
 
 
@@ -53,7 +53,7 @@ public class cart {
 		System.out.println("your cart contains: ");
 		for(Object i : itemlist )
 		{
-			System.out.println(((item) i).getAmount() + " " + ((item) i).getBrand() + "(s), Costing" +" "+ ((item) i).getPrice() +" " + "for each" );
+			System.out.println(((item) i).getAmount() + " " + ((item) i).getBrand() + " Costing" +" "+ ((item) i).getPrice() +" " + "for each" );
 		}
 
 	} 
