@@ -1,9 +1,9 @@
-public Reports() throws SQLException, IOException, ClassNotFoundException {
-        Vector parameters=Logic.functions.facts();
-        initComponents();
-        USERS.setText(parameters.get(0).toString());
-        MVU.setText("Client ID: "+parameters.get(1).toString());
-        NUMBEROFORDERS.setText(parameters.get(2).toString());
-        INCOME.setText(parameters.get(3).toString());
-        MVI.setText(parameters.get(4).toString());
-    }
+public static Vector facts() throws SQLException, IOException, ClassNotFoundException
+        {
+            Client c = new Client();
+            c.RequestFunction("report");
+            Vector facts=c.RecieveVector();
+            c.CloseSocket();
+            return facts;
+            
+        }
