@@ -163,7 +163,16 @@ public class Functions {
                     
         return records;
         }
-        
+        public static BufferedImage fetchImage(String ID, String Brand) throws SQLException, IOException {
+            String Query = "Select Image from Item where  ID='" + ID + "' and Brand= '" + Brand + "'";
+            ResultSet rs = DatabaseManipulation.retrieve(Query);
+            rs.next();
+            Blob blob = rs.getBlob("Image");
+            InputStream in = blob.getBinaryStream();
+            BufferedImage image = ImageIO.read(in);
+            return image;
+
+        }
         public static Vector retriveConsumables() throws SQLException
         {
             Vector<consumables> records = new Vector<consumables>();
